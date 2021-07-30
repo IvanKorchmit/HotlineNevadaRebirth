@@ -13,6 +13,14 @@ public class PlayerAttack : MonoBehaviour
     }
     private void Update()
     {
+        if (!inventory.PrimaryWeapon.isNone())
+        {
+            animator.SetInteger("Weapon", inventory.PrimaryWeapon.WeaponBase.ID);
+        }
+        else
+        {
+            animator.SetInteger("Weapon", 0);
+        }
         if (inventory.SecondaryWeapon.isNone())
         {
             if (Input.GetKey(KeyCode.Mouse0))
@@ -35,15 +43,12 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
-    public void Attack(bool isAlt)
+    public void Attack()
     {
-        if(!isAlt)
-        {
-            inventory.PrimaryWeapon.Shoot(gameObject);
-        }
-        else
-        {
-            inventory.SecondaryWeapon.Shoot(gameObject);
-        }
+        inventory.PrimaryWeapon.Shoot(gameObject);
+    }
+    public void AltAttack ()
+    {
+        inventory.SecondaryWeapon.Shoot(gameObject);
     }
 }

@@ -13,4 +13,12 @@ public class AnimationEvents : MonoBehaviour
     {
         sprite.flipY = !sprite.flipY;
     }
+    public void PlaySound(AudioClip clip)
+    {
+        AudioSource audio = new GameObject($"{clip.name} AUDIO",typeof(AudioSource)).GetComponent<AudioSource>();
+        audio.clip = clip;
+        audio.Play();
+        Destroy(audio.gameObject, clip.length);
+    
+    }
 }

@@ -25,10 +25,12 @@ public class Projectile : MonoBehaviour
         }
         if(collision.TryGetComponent(out IDamagable damage))
         {
-            damage.Damage(owner);
-            trail.SetParent(null);
-            Destroy(gameObject);
-            
+            if (owner != collision.transform)
+            {
+                damage.Damage(owner);
+                trail.SetParent(null);
+                Destroy(gameObject);
+            }
         }
     }
     private void FixedUpdate()

@@ -25,6 +25,7 @@ public class Inventory : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 }
+[System.Serializable]
 public struct Weapon
 {
     public WeaponBase WeaponBase => weaponItself;
@@ -38,7 +39,7 @@ public struct Weapon
     {
         if (ammo > 0)
         {
-            weaponItself.Shoot(owner);
+            weaponItself.Attack(owner);
             ammo--;
         }
     }

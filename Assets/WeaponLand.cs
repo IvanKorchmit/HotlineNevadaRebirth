@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class WeaponLand : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        GetComponent<SpriteRenderer>().sprite = weapon.WeaponBase.Sprite;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Weapon weapon;
 }

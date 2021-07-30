@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 9155198399737166289}
   - component: {fileID: 715556466}
   - component: {fileID: 715556467}
+  - component: {fileID: 715556465}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -273,6 +274,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed06d4c27bf8b9f43b6f2c961a3be1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  primary:
+    weaponItself: {fileID: 0}
+    ammo: 0
+  secondary:
+    weaponItself: {fileID: 0}
+    ammo: 0
+--- !u!114 &715556465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9155198399737166297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf56d9dc2cc0fe44c826462cb8b63c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closestWeapon: {fileID: 0}
 --- !u!1 &9155198400708130925
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +363,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -3424222113253453937, guid: 1fccfffaa9ab8ed4d8ffc1fd1faae88a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
