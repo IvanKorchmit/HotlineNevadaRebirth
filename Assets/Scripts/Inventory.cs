@@ -7,13 +7,76 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Weapon primary;
     [SerializeField] private Weapon secondary;
     [SerializeField] private MagazineItem[] inventory;
-
+    public MagazineItem FindMagazine(MagazineItem magazine)
+    {
+        Debug.Log("Test");
+        if (primary.WeaponBase is Firearm f)
+        {
+            if (magazine.magazine == null || magazine.ammo == 0)
+            {
+                foreach (var item in inventory)
+                {
+                    if (f.CheckMagazines(item.magazine))
+                    {
+                        return item;
+                    }
+                }
+            }
+            else if (magazine.magazine != null)
+            {
+                foreach (var item in inventory)
+                {
+                    if (item.magazine == magazine.magazine)
+                    {
+                        return item;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in inventory)
+                {
+                    if (f.CheckMagazines(item.magazine))
+                    {
+                        return item;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    public MagazineItem TakeItem(Magazine magazine, int quantity)
+    {
+        foreach (var item in inventory)
+        {
+            if (item != null && item.magazine == magazine)
+            {
+                item.Take(quantity);
+                MagazineItem newItem = new MagazineItem(item.ammo, quantity, item.magazine);
+                return newItem;
+            }
+        }
+        return null;
+    }
+    public bool hasThisMagazine(Magazine magazine)
+    {
+        foreach (var mag in inventory)
+        {
+            if(mag != null && mag.magazine == magazine)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public void AddItem(MagazineItem magazine)
     {
+        Debug.Log("Adding items");
         for (int i = 0; i < inventory.Length; i++)
         {
             if (inventory[i].Equals(magazine))
             {
+                Debug.Log("Found same");
                 inventory[i].quantity += magazine.quantity;
                 return;
             }
@@ -48,11 +111,17 @@ public class Weapon
 
     [SerializeField] private MagazineItem magazine;
     [SerializeField] private WeaponBase weaponItself;
+
+    /// <summary>
+    /// Checks if the weapon is null (Shortcut for weapon == null)
+    /// </summary>
+    /// <returns>
+    /// True if the weapon is Null or else False.
+    /// </returns>
     public bool isNone()
     {
         return weaponItself == null;
     }
-
     public void Shoot(GameObject owner)
     {
         if (weaponItself is Firearm)
@@ -60,7 +129,6 @@ public class Weapon
             if (magazine.ammo > 0)
             {
                 magazine.ammo--;
-                Debug.Log("Shooting");
                 weaponItself.Attack(owner, magazine.magazine);
                 if (magazine.ammo == 0)
                 {
@@ -81,7 +149,16 @@ public class Weapon
         get => magazine.ammo;
         set => magazine.ammo = value;
     }
-    public Magazine Magazine => magazine.magazine;
+    public Magazine Magazine 
+    { 
+        get => magazine.magazine;
+        set => magazine.magazine = value;
+    }
+    public MagazineItem MagazineBase
+    {
+        get => magazine;
+        set => magazine = value;
+    }
 
     public Weapon(MagazineItem magazine, WeaponBase weapon)
     {
@@ -97,27 +174,4 @@ public class Weapon
         weaponItself = null;
         magazine = MagazineItem.Empty;
     }
-}
-
-[System.Serializable]
-public class MagazineItem
-{
-    public Magazine magazine;
-    public int ammo;
-    public int quantity;
-    public MagazineItem Copy()
-    {
-        return new MagazineItem(ammo,quantity,magazine);
-    }
-    public MagazineItem(int ammo, int quantity, Magazine magazine)
-    {
-        this.magazine = magazine;
-        this.ammo = ammo;
-        this.quantity = quantity;
-    }
-    public bool Equals(MagazineItem magazine)
-    {
-        return this.magazine == magazine.magazine && ammo == magazine.ammo;
-    }
-    public static MagazineItem Empty => new MagazineItem(0, 0, null);
 }

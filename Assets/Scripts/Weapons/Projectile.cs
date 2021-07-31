@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private float speed = 70;
+    private float speed = 140;
     public int damage;
     private Vector2 startPosition;
     private Transform trail;

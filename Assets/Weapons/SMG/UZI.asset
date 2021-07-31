@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b133fdd6edc520843b5b619637a85732, type: 3}
   m_Name: UZI
   m_EditorClassIdentifier: 
-  name: 
+  name: UZI
   uiIcon: {fileID: 0}
-  sprite: {fileID: 0}
-  id: 1
-  requiresMagazine: 0
+  sprite: {fileID: 21300000, guid: ebfa1b1fc876b234486099e7ced6def9, type: 3}
+  id: 3
+  requiresMagazine: 1
   cone: 0
-  shell: {fileID: 0}
-  allowedMagazines: []
-  ammoCapacity: 0
+  shell: {fileID: 2592988093817448082, guid: 6adf469c371c06447886c60d9ef2e4c4, type: 3}
+  allowedMagazines:
+  - {fileID: 11400000, guid: 2fe45fef017a37d4e9b3a69972c05922, type: 2}
+  ammoCapacity: 32

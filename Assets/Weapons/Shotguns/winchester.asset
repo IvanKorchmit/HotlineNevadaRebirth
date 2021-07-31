@@ -16,8 +16,10 @@ MonoBehaviour:
   uiIcon: {fileID: 0}
   sprite: {fileID: 21300000, guid: 50e966af2fb009b4ea72d1873ddbee27, type: 3}
   id: 2
+  requiresMagazine: 0
   cone: 1.5
-  ammoCapacity: 8
   shell: {fileID: 5711963213592174763, guid: 47058d37b944ec349a0d0371fc65f862, type: 3}
   allowedMagazines:
   - {fileID: 11400000, guid: 11dd171b271463c4994abe6d736ea475, type: 2}
+  - {fileID: 11400000, guid: f91659d7ce6229f41bf7a054500ae385, type: 2}
+  ammoCapacity: 8

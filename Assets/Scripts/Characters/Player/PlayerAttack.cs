@@ -7,6 +7,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Animator animator;
     private Inventory inventory;
     private Transform shellPoint;
+    [SerializeField] private MagazineItem oldMagazine;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -43,9 +44,31 @@ public class PlayerAttack : MonoBehaviour
             {
                 animator.SetBool("Attack", false);
             }
-            if(Input.GetKeyDown(KeyCode.R) && !inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm)
+            if (Input.GetKeyDown(KeyCode.R) && !inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm)
             {
-                 animator.SetBool("Reloading", true);
+                if (inventory.PrimaryWeapon.Magazine != null && inventory.hasThisMagazine(inventory.PrimaryWeapon.Magazine))
+                {
+                    oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
+                    animator.SetBool("Reloading", true);
+                }
+                else
+                {
+                    MagazineItem magazine = inventory.FindMagazine(inventory.PrimaryWeapon.MagazineBase);
+                    if (magazine != null && magazine.magazine != null)
+                    {
+                        animator.SetBool("Reloading", true);
+                        oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
+                        inventory.PrimaryWeapon.Magazine = magazine.magazine;
+
+                        if(inventory.PrimaryWeapon.WeaponBase is Firearm fa)
+                        {
+                            if(fa.RequiresMagazine)
+                            {
+                                inventory.PrimaryWeapon.Ammo = magazine.ammo;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -74,16 +97,21 @@ public class PlayerAttack : MonoBehaviour
             int id = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
             animator.Play(id, 0, 0);
             inventory.PrimaryWeapon.Ammo++;
+            inventory.TakeItem(inventory.PrimaryWeapon.Magazine, 1);
             return;
         }
         animator.SetBool("Reloading", false);
     }
     public void EjectMagazine()
     {
+        inventory.TakeItem(inventory.PrimaryWeapon.Magazine, 1);
+        // Throwing magazine
         GameObject magazine = Instantiate(PrefabsStatic.Magazine, shellPoint.position, shellPoint.rotation * Quaternion.Euler(0, 0, Random.Range(-30, 30)));
         Rigidbody2D rb = magazine.GetComponent<Rigidbody2D>();
         rb.velocity = magazine.transform.up * (14 + Random.Range(-4, 12));
-        magazine.GetComponent<SpriteRenderer>().sprite = inventory.PrimaryWeapon.Ammo == 0 ? inventory.PrimaryWeapon.Magazine.Empty : inventory.PrimaryWeapon.Magazine.Sprite;
+        magazine.GetComponent<SpriteRenderer>().sprite = oldMagazine.ammo == 0 ? oldMagazine.magazine.Empty : oldMagazine.magazine.Sprite;
         rb.angularVelocity = Random.Range(0, 360);
+        magazine.GetComponent<MagazineLand>().magazine = oldMagazine;
+        animator.SetBool("Reloading", false);
     }
 }

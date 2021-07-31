@@ -15,4 +15,7 @@ MonoBehaviour:
   stack: 16
   name: Slug
   damage: 30
+  sprite: {fileID: 21300000, guid: cb13703bc10ddb94aab0e914a13e6a7a, type: 3}
+  empty: {fileID: 21300000, guid: 00924b9b39bbb0a4481c71883c360958, type: 3}
+  ammoCapacity: 0
   pellets: 1
