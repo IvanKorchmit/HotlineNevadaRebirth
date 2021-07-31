@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magazine:
-    magazine: {fileID: 11400000, guid: 11dd171b271463c4994abe6d736ea475, type: 2}
+    magazine: {fileID: 11400000, guid: f91659d7ce6229f41bf7a054500ae385, type: 2}
     ammo: 8
     quantity: 1
 --- !u!212 &59918956
@@ -292,6 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bullet: {fileID: 3582394720465195091, guid: c7284aa17470a2c48bc9a3a9550a05d1, type: 3}
   _weapon: {fileID: 874018775869594658, guid: d23e0ff917ea6cc48854f2d7a0226ab2, type: 3}
+  _magazine: {fileID: 0}
 --- !u!4 &405068800
 Transform:
   m_ObjectHideFlags: 0

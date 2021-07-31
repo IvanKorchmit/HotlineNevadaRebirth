@@ -80,9 +80,10 @@ public class PlayerAttack : MonoBehaviour
     }
     public void EjectMagazine()
     {
-        GameObject magazine = Instantiate(inventory.primary.weapon.requiredMagazine.prefab, shellPoint.position, shellPoint.rotation * Quaternion.Euler(0, 0, Random.Range(-30, 30)));
-        magazine.GetComponent<Rigidbody2D>().velocity = magazine.transform.up * (14 + Random.Range(-4, 12));
-        magazine.GetComponent<SpriteRenderer>().sprite = inventory..weapon.requiredMagazine.empty;
-        magazine.GetComponent<Rigidbody2D>().angularVelocity = Random.Range(0, 360);
+        GameObject magazine = Instantiate(PrefabsStatic.Magazine, shellPoint.position, shellPoint.rotation * Quaternion.Euler(0, 0, Random.Range(-30, 30)));
+        Rigidbody2D rb = magazine.GetComponent<Rigidbody2D>();
+        rb.velocity = magazine.transform.up * (14 + Random.Range(-4, 12));
+        magazine.GetComponent<SpriteRenderer>().sprite = inventory.PrimaryWeapon.Ammo == 0 ? inventory.PrimaryWeapon.Magazine.Empty : inventory.PrimaryWeapon.Magazine.Sprite;
+        rb.angularVelocity = Random.Range(0, 360);
     }
 }

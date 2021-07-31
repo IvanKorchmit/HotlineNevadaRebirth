@@ -81,7 +81,7 @@ public class Weapon
         get => magazine.ammo;
         set => magazine.ammo = value;
     }
-
+    public Magazine Magazine => magazine.magazine;
 
     public Weapon(MagazineItem magazine, WeaponBase weapon)
     {
