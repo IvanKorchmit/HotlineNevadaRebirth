@@ -18,4 +18,6 @@ MonoBehaviour:
   id: 1
   cone: 6
   ammoCapacity: 8
-  pellets: 10
+  shell: {fileID: 5711963213592174763, guid: 47058d37b944ec349a0d0371fc65f862, type: 3}
+  allowedMagazines:
+  - {fileID: 11400000, guid: 11dd171b271463c4994abe6d736ea475, type: 2}

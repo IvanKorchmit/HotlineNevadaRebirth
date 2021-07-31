@@ -4,37 +4,66 @@ using UnityEngine;
 
 public class Damagable : MonoBehaviour, IDamagable
 {
-    public void Damage(Transform killer)
+    public int bulletAmount;
+    public int bulletDamage;
+    public int sharpDamage;
+    public int bluntDamage;
+    public int explosionDamage;
+    public int flameDamage;
+    public Transform lastKiller;
+    public enum DamageType
     {
-        throw new System.NotImplementedException();
+        blunt, sharp, bullet, explosion, flame
     }
-
-    public void Die(Transform killer)
+    private bool isTimer;
+    private float maxTime;
+    private float time;
+    public void Damage(Transform killer, int damage, DamageType damageType)
     {
-        throw new System.NotImplementedException();
+        isTimer = true;
+        lastKiller = killer;
+        switch (damageType)
+        {
+            case DamageType.blunt:
+                bluntDamage += damage;
+                break;
+            case DamageType.sharp:
+                sharpDamage += damage;
+                break;
+            case DamageType.bullet:
+                bulletAmount++;
+                bulletDamage += damage;
+                break;
+            case DamageType.explosion:
+                explosionDamage += damage;
+                break;
+            case DamageType.flame:
+                flameDamage += damage;
+                break;
+            default:
+                break;
+        }
     }
-
-    public void Stun(Transform fromWho)
+    private void Die(Transform killer)
     {
-        throw new System.NotImplementedException();
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if(isTimer)
+        {
+            time += Time.deltaTime;
+            if (time >= maxTime)
+            {
+                
+            }
+        }
     }
 }
 public interface IDamagable
 {
 
-    void Damage(Transform killer);
-    void Die(Transform killer);
-    void Stun(Transform fromWho);
+    void Damage(Transform killer, int damage, Damagable.DamageType damageType);
 }

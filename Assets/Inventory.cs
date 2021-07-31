@@ -6,9 +6,27 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private Weapon primary;
     [SerializeField] private Weapon secondary;
-    private bool isPlayer;
-    private Animator animator;
+    [SerializeField] private MagazineItem[] inventory;
 
+    public void AddItem(MagazineItem magazine)
+    {
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            if (inventory[i].Equals(magazine))
+            {
+                inventory[i].quantity += magazine.quantity;
+                return;
+            }
+        }
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            if (inventory[i] == null || inventory[i].magazine == null)
+            {
+                inventory[i] = magazine.Copy();
+                return;
+            }
+        }
+    }
     public Weapon PrimaryWeapon
     {
         get { return primary; }
@@ -21,18 +39,15 @@ public class Inventory : MonoBehaviour
     }
     private void Start()
     {
-        isPlayer = gameObject.CompareTag("Player");
-        animator = GetComponent<Animator>();
+            
     }
 }
 [System.Serializable]
 public class Weapon
 {
 
-
+    [SerializeField] private MagazineItem magazine;
     [SerializeField] private WeaponBase weaponItself;
-    [SerializeField] private int ammo;
-
     public bool isNone()
     {
         return weaponItself == null;
@@ -42,12 +57,12 @@ public class Weapon
     {
         if (weaponItself is Firearm)
         {
-            if (ammo > 0)
+            if (magazine.ammo > 0)
             {
-                ammo--;
+                magazine.ammo--;
                 Debug.Log("Shooting");
-                weaponItself.Attack(owner);
-                if (ammo == 0)
+                weaponItself.Attack(owner, magazine.magazine);
+                if (magazine.ammo == 0)
                 {
                     owner.GetComponent<Animator>().SetBool("Attack", false);
                 }
@@ -59,24 +74,50 @@ public class Weapon
         }
     }
 
-
     public WeaponBase WeaponBase => weaponItself;
 
-    public int Ammo => ammo;
-
-
-    public Weapon(int ammo, WeaponBase weapon)
+    public int Ammo
     {
-        this.ammo = ammo;
+        get => magazine.ammo;
+        set => magazine.ammo = value;
+    }
+
+
+    public Weapon(MagazineItem magazine, WeaponBase weapon)
+    {
+        this.magazine = magazine;
         weaponItself = weapon;
     }
     public Weapon Copy()
     {
-        return new Weapon(ammo, weaponItself);
+        return new Weapon(magazine, weaponItself);
     }
     public void Destroy()
     {
         weaponItself = null;
-        ammo = 0;
+        magazine = MagazineItem.Empty;
     }
+}
+
+[System.Serializable]
+public class MagazineItem
+{
+    public Magazine magazine;
+    public int ammo;
+    public int quantity;
+    public MagazineItem Copy()
+    {
+        return new MagazineItem(ammo,quantity,magazine);
+    }
+    public MagazineItem(int ammo, int quantity, Magazine magazine)
+    {
+        this.magazine = magazine;
+        this.ammo = ammo;
+        this.quantity = quantity;
+    }
+    public bool Equals(MagazineItem magazine)
+    {
+        return this.magazine == magazine.magazine && ammo == magazine.ammo;
+    }
+    public static MagazineItem Empty => new MagazineItem(0, 0, null);
 }

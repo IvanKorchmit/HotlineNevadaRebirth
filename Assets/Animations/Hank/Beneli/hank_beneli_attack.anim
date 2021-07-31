@@ -21,19 +21,19 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: -3415294215352282996, guid: 44e5c71af2c68a8458034a6de9146818, type: 3}
-    - time: 0.05
+    - time: 0.028571429
       value: {fileID: -6822124669618723587, guid: 44e5c71af2c68a8458034a6de9146818, type: 3}
-    - time: 0.1
+    - time: 0.057142857
       value: {fileID: -7147992017459150947, guid: 44e5c71af2c68a8458034a6de9146818, type: 3}
-    - time: 0.15
+    - time: 0.08571429
       value: {fileID: 19445407212249899, guid: 44e5c71af2c68a8458034a6de9146818, type: 3}
-    - time: 0.2
+    - time: 0.114285715
       value: {fileID: -4129878495030120735, guid: 44e5c71af2c68a8458034a6de9146818, type: 3}
     attribute: m_Sprite
     path: Visual
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 20
+  m_SampleRate: 35
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -58,7 +58,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.25
+    m_StopTime: 0.14285715
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -89,6 +89,13 @@ AnimationClip:
     functionName: PlaySound
     data: 
     objectReferenceParameter: {fileID: 8300000, guid: b458dcf8a65e0424bb993881a23ecc20, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
+    functionName: Eject
+    data: 
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

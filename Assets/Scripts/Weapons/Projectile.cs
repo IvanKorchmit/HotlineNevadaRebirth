@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private float Speed = 45;
+    private float speed = 70;
+    public int damage;
     private Vector2 startPosition;
     private Transform trail;
     public Transform owner;
@@ -12,7 +13,7 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * (Speed+Random.Range(-5,5));
+        rb.velocity = transform.right * (speed+Random.Range(-5,5));
         trail = transform.Find("Trail");
         startPosition = transform.position;
     }
@@ -27,7 +28,7 @@ public class Projectile : MonoBehaviour
         {
             if (owner != collision.transform)
             {
-                damage.Damage(owner);
+                damage.Damage(owner, this.damage, Damagable.DamageType.bullet);
                 trail.SetParent(null);
                 Destroy(gameObject);
             }
