@@ -39,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
         if (m.magnitude == 0 && animator.GetCurrentAnimatorStateInfo(0).IsTag("Walk"))
         {
             animator.speed = 0;
-            legs_animator.speed = 0;
         }
         else
         {
@@ -48,6 +47,10 @@ public class PlayerMovement : MonoBehaviour
         if(m.magnitude > 0)
         {
             legs_animator.speed = 1;
+        }
+        else
+        {
+            legs_animator.speed = 0;
         }
         rb.MovePosition(rb.position + movement);
     }

@@ -26,22 +26,57 @@ public class Inventory : MonoBehaviour
     }
 }
 [System.Serializable]
-public struct Weapon
+public class Weapon
 {
-    public WeaponBase WeaponBase => weaponItself;
+
+
+    [SerializeField] private WeaponBase weaponItself;
+    [SerializeField] private int ammo;
+
     public bool isNone()
     {
         return weaponItself == null;
     }
-    [SerializeField] private WeaponBase weaponItself;
-    [SerializeField] private int ammo;
+
     public void Shoot(GameObject owner)
     {
-        if (ammo > 0)
+        if (weaponItself is Firearm)
         {
-            weaponItself.Attack(owner);
-            ammo--;
+            if (ammo > 0)
+            {
+                ammo--;
+                Debug.Log("Shooting");
+                weaponItself.Attack(owner);
+                if (ammo == 0)
+                {
+                    owner.GetComponent<Animator>().SetBool("Attack", false);
+                }
+            }
+            else
+            {
+                owner.GetComponent<Animator>().SetBool("Attack", false);
+            }
         }
     }
+
+
+    public WeaponBase WeaponBase => weaponItself;
+
     public int Ammo => ammo;
+
+
+    public Weapon(int ammo, WeaponBase weapon)
+    {
+        this.ammo = ammo;
+        weaponItself = weapon;
+    }
+    public Weapon Copy()
+    {
+        return new Weapon(ammo, weaponItself);
+    }
+    public void Destroy()
+    {
+        weaponItself = null;
+        ammo = 0;
+    }
 }
