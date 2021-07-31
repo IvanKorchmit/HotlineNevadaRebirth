@@ -53,7 +53,7 @@ public class PlayerAttack : MonoBehaviour
                 }
                 else
                 {
-                    MagazineItem magazine = inventory.FindMagazine(inventory.PrimaryWeapon.MagazineBase);
+                    MagazineItem magazine = inventory.FindMagazine(inventory.PrimaryWeapon.MagazineBase).Copy();
                     if (magazine != null && magazine.magazine != null)
                     {
                         animator.SetBool("Reloading", true);

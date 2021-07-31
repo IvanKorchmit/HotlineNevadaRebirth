@@ -2600,3 +2600,84 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 2873.817226 seconds.
+  path: Assets/Magazine/SMG_Magazine_32 1.asset
+  artifactKey: Guid(aa3c4333a36e2ff43ba656c0a68e202a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Magazine/SMG_Magazine_32 1.asset using Guid(aa3c4333a36e2ff43ba656c0a68e202a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '38e8c61ea9f2713adeca93857d469c50') in 0.033441 seconds 
+  Import took 0.055903 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.633443 seconds.
+  path: Assets/Magazine/SMG_Magazine_64.asset
+  artifactKey: Guid(aa3c4333a36e2ff43ba656c0a68e202a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Magazine/SMG_Magazine_64.asset using Guid(aa3c4333a36e2ff43ba656c0a68e202a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f1538b0e41e6534213943ff0d0c20b9') in 0.027827 seconds 
+  Import took 0.032265 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12.874051 seconds.
+  path: Assets/Magazine/SMG_Magazine_64.asset
+  artifactKey: Guid(aa3c4333a36e2ff43ba656c0a68e202a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Magazine/SMG_Magazine_64.asset using Guid(aa3c4333a36e2ff43ba656c0a68e202a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'afb2a664919664b7472bb01d28ed6a6a') in 0.022010 seconds 
+  Import took 0.027817 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004231 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.49 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.370 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1372ms)
+		BeginReloadAssembly (218ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (21ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (95ms)
+		EndReloadAssembly (1072ms)
+			LoadAssemblies (130ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (372ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (60ms)
+			SetupLoadedEditorAssemblies (375ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (6ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (100ms)
+				ProcessInitializeOnLoadAttributes (254ms)
+				ProcessInitializeOnLoadMethodAttributes (7ms)
+				AfterProcessingInitializeOnLoad (7ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (14ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.58 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2101 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 96.9 MB.
+System memory in use after: 96.8 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2678.
+Total: 2.579900 ms (FindLiveObjects: 0.219800 ms CreateObjectMapping: 0.085800 ms MarkObjects: 2.101600 ms  DeleteObjects: 0.171500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

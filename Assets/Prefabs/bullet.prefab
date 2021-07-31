@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449560e29b5512a4e9271f8d9dd2b140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
   owner: {fileID: 0}
 --- !u!1 &3582394720598153507
 GameObject:
@@ -145,7 +146,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: db7ee850b9bd9674fb9a8eb00b0cb847, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
