@@ -9,38 +9,25 @@ public class Inventory : MonoBehaviour
     [SerializeField] private MagazineItem[] inventory;
     public MagazineItem FindMagazine(MagazineItem magazine)
     {
-        Debug.Log("Test");
-        if (primary.WeaponBase is Firearm f)
+        if(magazine.magazine != null)
         {
-            if (magazine.magazine == null || magazine.ammo == 0)
+            foreach (var item in inventory)
             {
-                foreach (var item in inventory)
+                if(item.magazine == magazine.magazine)
                 {
-                    if (f.CheckMagazines(item.magazine))
-                    {
-                        return item;
-                    }
+                    return item;
                 }
             }
-            else if (magazine.magazine != null)
+        }
+        return null;
+    }
+    public MagazineItem FindAllowedMagazines(Firearm firearm)
+    {
+        foreach (var item in inventory)
+        {
+            if (firearm.CheckMagazines(item.magazine))
             {
-                foreach (var item in inventory)
-                {
-                    if (item.magazine == magazine.magazine)
-                    {
-                        return item;
-                    }
-                }
-            }
-            else
-            {
-                foreach (var item in inventory)
-                {
-                    if (f.CheckMagazines(item.magazine))
-                    {
-                        return item;
-                    }
-                }
+                return item;
             }
         }
         return null;
@@ -71,12 +58,10 @@ public class Inventory : MonoBehaviour
     }
     public void AddItem(MagazineItem magazine)
     {
-        Debug.Log("Adding items");
         for (int i = 0; i < inventory.Length; i++)
         {
             if (inventory[i].Equals(magazine))
             {
-                Debug.Log("Found same");
                 inventory[i].quantity += magazine.quantity;
                 return;
             }

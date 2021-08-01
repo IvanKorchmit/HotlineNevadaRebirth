@@ -38,31 +38,57 @@ public class PlayerAttack : MonoBehaviour
                     {
                         animator.SetBool("Attack", true);
                     }
+                    else
+                    {
+                        Transform flame = transform.Find("Visual/ShellPoint/Flame");
+                        if (flame != null)
+                        {
+                            flame.GetComponent<ParticleSystem>().Stop();
+                            flame.SetParent(null);
+                        }
+                    }
                 }
             }
             else
             {
+                Transform flame = transform.Find("Visual/ShellPoint/Flame");
+                if (flame != null)
+                {
+                    flame.GetComponent<ParticleSystem>().Stop();
+                    flame.SetParent(null);
+                }
                 animator.SetBool("Attack", false);
             }
             if (Input.GetKeyDown(KeyCode.R) && !inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm)
             {
-                if (inventory.PrimaryWeapon.Magazine != null && inventory.hasThisMagazine(inventory.PrimaryWeapon.Magazine))
+                MagazineItem magazine = inventory.FindMagazine(inventory.PrimaryWeapon.MagazineBase);
+               
+                if(!inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm fa)
                 {
-                    oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
-                    animator.SetBool("Reloading", true);
-                }
-                else
-                {
-                    MagazineItem magazine = inventory.FindMagazine(inventory.PrimaryWeapon.MagazineBase).Copy();
-                    if (magazine != null && magazine.magazine != null)
+                    if(magazine != null && magazine.magazine != null)
                     {
-                        animator.SetBool("Reloading", true);
+                        magazine = magazine.Copy();
                         oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
                         inventory.PrimaryWeapon.Magazine = magazine.magazine;
-
-                        if(inventory.PrimaryWeapon.WeaponBase is Firearm fa)
+                        animator.SetBool("Reloading", true);
+                        if(inventory.hasThisMagazine(magazine.magazine))
                         {
-                            if(fa.RequiresMagazine)
+                            if (fa.RequiresMagazine)
+                            {
+                                inventory.PrimaryWeapon.Ammo = magazine.ammo;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
+                        magazine = inventory.FindAllowedMagazines(fa);
+                        if (magazine != null)
+                        {
+                            magazine = magazine.Copy();
+                            inventory.PrimaryWeapon.Magazine = magazine.magazine;
+                            animator.SetBool("Reloading", true);
+                            if (fa.RequiresMagazine)
                             {
                                 inventory.PrimaryWeapon.Ammo = magazine.ammo;
                             }
@@ -80,6 +106,7 @@ public class PlayerAttack : MonoBehaviour
     {
         inventory.SecondaryWeapon.Shoot(gameObject);
     }
+    
     public void Eject()
     {
         if (!inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm f)
