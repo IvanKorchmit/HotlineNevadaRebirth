@@ -4840,7 +4840,7 @@ GameObject:
   - component: {fileID: 8403572366313125124}
   - component: {fileID: 8403572366313125131}
   - component: {fileID: 145969638887774414}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: Burning_Man
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4982,8 +4982,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72cd93235f6cb8468068321f8113eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  angleSpeed: 7
+  speed: 15
+  angleSpeed: 5.72
   dir: 1
 --- !u!1 &8403572367447226762
 GameObject:

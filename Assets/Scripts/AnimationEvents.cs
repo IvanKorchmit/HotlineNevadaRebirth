@@ -7,7 +7,7 @@ public class AnimationEvents : MonoBehaviour
     private SpriteRenderer sprite;
     private void Start()
     {
-        sprite = transform.Find("Visual").GetComponent<SpriteRenderer>();
+        sprite = transform.Find("Visual")?.GetComponent<SpriteRenderer>();
     }
     public void Flip()
     {
