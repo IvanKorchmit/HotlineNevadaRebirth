@@ -4841,7 +4841,7 @@ GameObject:
   - component: {fileID: 8403572366313125131}
   - component: {fileID: 145969638887774414}
   m_Layer: 11
-  m_Name: Burning Man
+  m_Name: Burning_Man
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

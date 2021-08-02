@@ -46,7 +46,11 @@ public class Damagable : MonoBehaviour, IDamagable
     }
     private void Die(Transform killer)
     {
-
+        if(flameDamage > 0)
+        {
+            Instantiate(PrefabsStatic.BurningMan,transform.position,Quaternion.Euler(0,0,Random.Range(0,360)));
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -57,13 +61,12 @@ public class Damagable : MonoBehaviour, IDamagable
             time += Time.deltaTime;
             if (time >= maxTime)
             {
-                
+                Die(lastKiller);
             }
         }
     }
 }
 public interface IDamagable
 {
-
     void Damage(Transform killer, int damage, Damagable.DamageType damageType);
 }

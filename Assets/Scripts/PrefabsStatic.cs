@@ -10,12 +10,14 @@ public class PrefabsStatic : MonoBehaviour
     public static GameObject Weapon;
     public GameObject _magazine;
     public static GameObject Magazine;
+    public GameObject _burningMan;
+    public static GameObject BurningMan;
     private void Start()
     {
         Bullet = _bullet;
         Weapon = _weapon;
         Magazine = _magazine;
-
+        BurningMan = _burningMan;
 
         Destroy(gameObject);
     }
