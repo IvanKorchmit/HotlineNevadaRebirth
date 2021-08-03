@@ -21,4 +21,8 @@ public class AnimationEvents : MonoBehaviour
         Destroy(audio.gameObject, clip.length);
     
     }
+    public void ShakeCamera(float duration)
+    {
+        Shake.ShakeCamera(duration);
+    }
 }

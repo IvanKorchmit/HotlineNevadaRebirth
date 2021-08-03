@@ -13,5 +13,5 @@ public class DeadBody : MonoBehaviour
     public void SpawnBodyPart(GameObject bodyPart)
     {
         Instantiate(bodyPart, transform.position, transform.rotation);
-    }
+    }   
 }
