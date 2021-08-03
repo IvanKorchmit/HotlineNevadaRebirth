@@ -80,3 +80,10 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0
+    functionName: PlaySoundEvent
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 0f7f59cb49ab72946a4c44b8233c45c4, type: 3}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0

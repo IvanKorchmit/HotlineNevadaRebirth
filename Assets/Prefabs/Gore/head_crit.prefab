@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8141026634409145412}
   - component: {fileID: 8197747508201524605}
   - component: {fileID: 2867214241445490340}
+  - component: {fileID: 1962623657086755602}
   m_Layer: 7
   m_Name: BloodSub
   m_TagString: Untagged
@@ -4865,6 +4866,20 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &1962623657086755602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075796366289900753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed04c18fae442cf4bbba2ea104ef34ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Prefab: {fileID: 0}
+  attachType: 1
 --- !u!1 &5908541704131097616
 GameObject:
   m_ObjectHideFlags: 0
@@ -9783,7 +9798,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 2
+  m_LinearDrag: 7
   m_AngularDrag: 2
   m_GravityScale: 0
   m_Material: {fileID: 0}

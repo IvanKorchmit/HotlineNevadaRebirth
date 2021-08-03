@@ -95,11 +95,11 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: PlaySound
+    functionName: PlaySoundEvent
     data: 
     objectReferenceParameter: {fileID: 8300000, guid: c63882952b144bb40aacc3eb0e2cc166, type: 3}
     floatParameter: 0
-    intParameter: 0
+    intParameter: 1
     messageOptions: 0
   - time: 0
     functionName: SpawnBodyPart

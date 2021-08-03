@@ -28,6 +28,8 @@ public class Projectile : MonoBehaviour
         {
             if (owner != collision.transform)
             {
+                Instantiate(PrefabsStatic.BloodParticle, transform.position, Quaternion.identity);
+                SoundStatic.PlaySound(Sound.SoundType.bulletFlesh);
                 damage.Damage(owner, this.damage, Damagable.DamageType.bullet);
                 trail.SetParent(null);
                 Destroy(gameObject);

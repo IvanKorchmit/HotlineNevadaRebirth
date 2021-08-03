@@ -57,7 +57,7 @@ public class PickupWeapon : MonoBehaviour
     }
     private void PickUpWeapon()
     {
-        if (!inventory.PrimaryWeapon.isNone())
+        if (!inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.isNone())
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Walk"))
             {

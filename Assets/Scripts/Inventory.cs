@@ -117,12 +117,26 @@ public class Weapon
                 weaponItself.Attack(owner, magazine.magazine);
                 if (magazine.ammo == 0)
                 {
-                    owner.GetComponent<Animator>().SetBool("Attack", false);
+                    if (owner.TryGetComponent(out Animator animator))
+                    {
+                        animator.SetBool("Attack", false);
+                    }
+                    else
+                    {
+                        owner.GetComponentInChildren<Animator>().SetBool("Attack", false);
+                    }
                 }
             }
             else
             {
-                owner.GetComponent<Animator>().SetBool("Attack", false);
+                if (owner.TryGetComponent(out Animator animator))
+                {
+                    animator.SetBool("Attack", false);
+                }
+                else
+                {
+                    owner.GetComponentInChildren<Animator>().SetBool("Attack", false);
+                }
             }
         }
     }

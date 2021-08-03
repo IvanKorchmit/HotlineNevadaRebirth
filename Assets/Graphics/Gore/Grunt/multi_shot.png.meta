@@ -1,7 +1,16 @@
 fileFormatVersion: 2
 guid: 36e9f9ec319602343b91a2ee84249c36
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 1426552048224460598
+    second: multi_shot_0
+  - first:
+      213: 7936307090148744253
+    second: multi_shot_1
+  - first:
+      213: 1247103083380642454
+    second: multi_shot_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -89,7 +98,70 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: multi_shot_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 75
+        width: 35
+        height: 27
+      alignment: 9
+      pivot: {x: 1, y: 0.5185185}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63f560897812cc310800000000000000
+      internalID: 1426552048224460598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: multi_shot_1
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 40
+        width: 35
+        height: 21
+      alignment: 9
+      pivot: {x: 1, y: 0.61904764}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3cdab8004d632e60800000000000000
+      internalID: 7936307090148744253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: multi_shot_2
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 9
+        width: 37
+        height: 15
+      alignment: 9
+      pivot: {x: 1, y: 0.53333336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 692923b95a99e4110800000000000000
+      internalID: 1247103083380642454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

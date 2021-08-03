@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -7,15 +5,28 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Animator animator;
     private Inventory inventory;
     private Transform shellPoint;
+    private Transform rightHand;
+    private Transform leftHand;
     [SerializeField] private MagazineItem oldMagazine;
     private void Start()
     {
         animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
         shellPoint = transform.Find("Visual/ShellPoint");
+        rightHand = transform.Find("Visual/RightHand/Visual");
+        leftHand = transform.Find("Visual/LeftHand/Visual");
     }
     private void Update()
     {
+        if(!inventory.SecondaryWeapon.isNone() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Akimbo"))
+        {
+            animator.Play("Akimbo");
+        }
+        else if (inventory.SecondaryWeapon.isNone() && animator.GetCurrentAnimatorStateInfo(0).IsName("Akimbo"))
+        {
+            animator.Play("Neutral");
+        }
+
         if (!inventory.PrimaryWeapon.isNone())
         {
             animator.SetInteger("Weapon", inventory.PrimaryWeapon.WeaponBase.ID);
@@ -24,23 +35,23 @@ public class PlayerAttack : MonoBehaviour
         {
             animator.SetInteger("Weapon", 0);
         }
-        if (inventory.SecondaryWeapon.isNone())
+        if (Input.GetKey(KeyCode.Mouse0))
         {
-            if (Input.GetKey(KeyCode.Mouse0))
+            if (inventory.SecondaryWeapon.isNone())
             {
-                if(inventory.PrimaryWeapon.isNone() || inventory.PrimaryWeapon.WeaponBase is Melee)
+                if (inventory.PrimaryWeapon.isNone() || inventory.PrimaryWeapon.WeaponBase is Melee)
                 {
                     animator.SetBool("Attack", true);
                 }
                 else if (inventory.PrimaryWeapon.WeaponBase is Firearm)
                 {
-                    if(inventory.PrimaryWeapon.Ammo > 0)
+                    if (inventory.PrimaryWeapon.Ammo > 0)
                     {
                         animator.SetBool("Attack", true);
                     }
                     else
                     {
-                        Transform flame = transform.Find("Visual/ShellPoint/Flame");
+                        Transform flame = shellPoint.Find("Flame");
                         if (flame != null)
                         {
                             flame.GetComponent<ParticleSystem>().Stop();
@@ -49,49 +60,81 @@ public class PlayerAttack : MonoBehaviour
                     }
                 }
             }
-            else
+            else if (!inventory.PrimaryWeapon.isNone())
             {
-                Transform flame = transform.Find("Visual/ShellPoint/Flame");
-                if (flame != null)
+                if (inventory.PrimaryWeapon.Ammo > 0)
                 {
-                    flame.GetComponent<ParticleSystem>().Stop();
-                    flame.SetParent(null);
+                    rightHand.GetComponent<Animator>().SetBool("Attack", true);
+                    rightHand.GetComponent<Animator>().SetInteger("Weapon", inventory.PrimaryWeapon.WeaponBase.ID);
                 }
-                animator.SetBool("Attack", false);
-            }
-            if (Input.GetKeyDown(KeyCode.R) && !inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm)
-            {
-                MagazineItem magazine = inventory.FindMagazine(inventory.PrimaryWeapon.MagazineBase);
-               
-                if(!inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm fa)
+                else
                 {
-                    if(magazine != null && magazine.magazine != null)
+                    rightHand.GetComponent<Animator>().SetBool("Attack", false);
+                }
+            }
+        }
+        else
+        {
+            Transform flame = shellPoint.Find("Flame");
+            if (flame != null)
+            {
+                flame.GetComponent<ParticleSystem>().Stop();
+                flame.SetParent(null);
+            }
+            rightHand.GetComponent<Animator>().SetBool("Attack", false);
+            animator.SetBool("Attack", false);
+        }
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            if (!inventory.SecondaryWeapon.isNone())
+            {
+                if (inventory.SecondaryWeapon.Ammo > 0)
+                {
+                    rightHand.GetComponent<Animator>().SetBool("Attack", true);
+                    rightHand.GetComponent<Animator>().SetInteger("Weapon", inventory.SecondaryWeapon.WeaponBase.ID);
+                }
+                else
+                {
+                    rightHand.GetComponent<Animator>().SetBool("Attack", false);
+                }
+            }
+        }
+        else
+        {
+            rightHand.GetComponent<Animator>().SetBool("Attack", false);
+        }
+        if (Input.GetKeyDown(KeyCode.R) && !inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm)
+        {
+            MagazineItem magazine = inventory.FindMagazine(inventory.PrimaryWeapon.MagazineBase);
+
+            if (!inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm fa)
+            {
+                if (magazine != null && magazine.magazine != null)
+                {
+                    magazine = magazine.Copy();
+                    oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
+                    inventory.PrimaryWeapon.Magazine = magazine.magazine;
+                    animator.SetBool("Reloading", true);
+                    if (inventory.hasThisMagazine(magazine.magazine))
                     {
-                        magazine = magazine.Copy();
-                        oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
-                        inventory.PrimaryWeapon.Magazine = magazine.magazine;
-                        animator.SetBool("Reloading", true);
-                        if(inventory.hasThisMagazine(magazine.magazine))
+                        if (fa.RequiresMagazine)
                         {
-                            if (fa.RequiresMagazine)
-                            {
-                                inventory.PrimaryWeapon.Ammo = magazine.ammo;
-                            }
+                            inventory.PrimaryWeapon.Ammo = magazine.ammo;
                         }
                     }
-                    else
+                }
+                else
+                {
+                    oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
+                    magazine = inventory.FindAllowedMagazines(fa);
+                    if (magazine != null)
                     {
-                        oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
-                        magazine = inventory.FindAllowedMagazines(fa);
-                        if (magazine != null)
+                        magazine = magazine.Copy();
+                        inventory.PrimaryWeapon.Magazine = magazine.magazine;
+                        animator.SetBool("Reloading", true);
+                        if (fa.RequiresMagazine)
                         {
-                            magazine = magazine.Copy();
-                            inventory.PrimaryWeapon.Magazine = magazine.magazine;
-                            animator.SetBool("Reloading", true);
-                            if (fa.RequiresMagazine)
-                            {
-                                inventory.PrimaryWeapon.Ammo = magazine.ammo;
-                            }
+                            inventory.PrimaryWeapon.Ammo = magazine.ammo;
                         }
                     }
                 }
@@ -101,10 +144,6 @@ public class PlayerAttack : MonoBehaviour
     public void Attack()
     {
         inventory.PrimaryWeapon.Shoot(gameObject);
-    }
-    public void AltAttack ()
-    {
-        inventory.SecondaryWeapon.Shoot(gameObject);
     }
     
     public void Eject()

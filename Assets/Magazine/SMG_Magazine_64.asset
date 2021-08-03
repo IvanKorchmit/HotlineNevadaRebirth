@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stack: 0
   name: 
-  damage: 0
+  damage: 6
   sprite: {fileID: -683978217077198313, guid: 12543315b90087348ac1caa2cc775f15, type: 3}
   empty: {fileID: -2422530574703286335, guid: 12543315b90087348ac1caa2cc775f15, type: 3}
   ammoCapacity: 64

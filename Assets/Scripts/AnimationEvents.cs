@@ -5,6 +5,7 @@ using UnityEngine;
 public class AnimationEvents : MonoBehaviour
 {
     private SpriteRenderer sprite;
+    private Inventory inventory;
     private void Start()
     {
         sprite = transform.Find("Visual")?.GetComponent<SpriteRenderer>();
@@ -15,11 +16,12 @@ public class AnimationEvents : MonoBehaviour
     }
     public void PlaySound(AudioClip clip)
     {
-        AudioSource audio = new GameObject($"{clip.name} AUDIO",typeof(AudioSource)).GetComponent<AudioSource>();
-        audio.clip = clip;
-        audio.Play();
-        Destroy(audio.gameObject, clip.length);
+        SoundStatic.PlaySound(clip);
     
+    }
+    public void PlaySoundEvent(Sound.SoundType e)
+    {
+        SoundStatic.PlaySound(e);
     }
     public void ShakeCamera(float duration)
     {

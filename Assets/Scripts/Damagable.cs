@@ -16,7 +16,7 @@ public class Damagable : MonoBehaviour, IDamagable
         blunt, sharp, bullet, explosion, flame
     }
     private bool isTimer;
-    private float maxTime;
+    private float maxTime = 0.1f;
     private float time;
     public void Damage(Transform killer, int damage, DamageType damageType)
     {
@@ -54,7 +54,7 @@ public class Damagable : MonoBehaviour, IDamagable
             Instantiate(PrefabsStatic.BurningMan,transform.position,Quaternion.Euler(0,0,Random.Range(0,360)));
             Destroy(gameObject);
         }
-        else if (bulletDamage > 10)
+        else if (bulletDamage > 0 || bulletAmount > 0)
         {
             var Corpse = Instantiate(PrefabsStatic.Corpse, transform.position, ang_q).GetComponent<Animator>();
             Corpse.SetInteger("Random", Random.Range(0, 3));
