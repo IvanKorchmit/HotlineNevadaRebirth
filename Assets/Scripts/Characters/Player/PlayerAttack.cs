@@ -5,20 +5,32 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Animator animator;
     private Inventory inventory;
     private Transform shellPoint;
-    private Transform rightHand;
-    private Transform leftHand;
+    private Animator rightHand;
+    private Animator leftHand;
     [SerializeField] private MagazineItem oldMagazine;
     private void Start()
     {
         animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
         shellPoint = transform.Find("Visual/ShellPoint");
-        rightHand = transform.Find("Visual/RightHand/Visual");
-        leftHand = transform.Find("Visual/LeftHand/Visual");
+        rightHand = transform.Find("Visual/RightHand/Visual").GetComponent<Animator>();
+        leftHand = transform.Find("Visual/LeftHand/Visual").GetComponent<Animator>();
     }
     private void Update()
     {
-        if(!inventory.SecondaryWeapon.isNone() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Akimbo"))
+        if (!inventory.SecondaryWeapon.isNone() && !inventory.PrimaryWeapon.isNone())
+        {
+            rightHand.SetInteger("Weapon", inventory.SecondaryWeapon.WeaponBase.ID);
+            leftHand.SetInteger("Weapon", inventory.PrimaryWeapon.WeaponBase.ID);
+            rightHand.gameObject.SetActive(true);
+            leftHand.gameObject.SetActive(true);
+        }
+        else
+        {
+            rightHand.gameObject.SetActive(false);
+            leftHand.gameObject.SetActive(false);
+        }
+        if (!inventory.SecondaryWeapon.isNone() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Akimbo"))
         {
             animator.Play("Akimbo");
         }
@@ -64,12 +76,17 @@ public class PlayerAttack : MonoBehaviour
             {
                 if (inventory.PrimaryWeapon.Ammo > 0)
                 {
-                    rightHand.GetComponent<Animator>().SetBool("Attack", true);
-                    rightHand.GetComponent<Animator>().SetInteger("Weapon", inventory.PrimaryWeapon.WeaponBase.ID);
+                    leftHand.SetBool("Attack", true);
                 }
                 else
                 {
-                    rightHand.GetComponent<Animator>().SetBool("Attack", false);
+                    leftHand.SetBool("Attack", false);
+                    Transform flame = leftHand.transform.Find("ShellPoint/Flame");
+                    if (flame != null)
+                    {
+                        flame.GetComponent<ParticleSystem>().Stop();
+                        flame.SetParent(null);
+                    }
                 }
             }
         }
@@ -81,7 +98,13 @@ public class PlayerAttack : MonoBehaviour
                 flame.GetComponent<ParticleSystem>().Stop();
                 flame.SetParent(null);
             }
-            rightHand.GetComponent<Animator>().SetBool("Attack", false);
+            flame = leftHand.transform.Find("ShellPoint/Flame");
+            if (flame != null)
+            {
+                flame.GetComponent<ParticleSystem>().Stop();
+                flame.SetParent(null);
+            }
+            leftHand.SetBool("Attack", false);
             animator.SetBool("Attack", false);
         }
         if (Input.GetKey(KeyCode.Mouse1))
@@ -90,18 +113,29 @@ public class PlayerAttack : MonoBehaviour
             {
                 if (inventory.SecondaryWeapon.Ammo > 0)
                 {
-                    rightHand.GetComponent<Animator>().SetBool("Attack", true);
-                    rightHand.GetComponent<Animator>().SetInteger("Weapon", inventory.SecondaryWeapon.WeaponBase.ID);
+                    rightHand.SetBool("Attack", true);
                 }
                 else
                 {
-                    rightHand.GetComponent<Animator>().SetBool("Attack", false);
+                    rightHand.SetBool("Attack", false);
+                    Transform flame = rightHand.transform.Find("ShellPoint/Flame");
+                    if (flame != null)
+                    {
+                        flame.GetComponent<ParticleSystem>().Stop();
+                        flame.SetParent(null);
+                    }
                 }
             }
         }
         else
         {
-            rightHand.GetComponent<Animator>().SetBool("Attack", false);
+            rightHand.SetBool("Attack", false);
+            Transform flame = rightHand.transform.Find("ShellPoint/Flame");
+            if (flame != null)
+            {
+                flame.GetComponent<ParticleSystem>().Stop();
+                flame.SetParent(null);
+            }
         }
         if (Input.GetKeyDown(KeyCode.R) && !inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm)
         {

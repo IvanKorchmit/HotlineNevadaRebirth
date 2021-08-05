@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b133fdd6edc520843b5b619637a85732, type: 3}
+  m_Name: Pistol
+  m_EditorClassIdentifier: 
+  name: Pistol
+  uiIcon: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 064fd6465b0d3cf4287c6bff2b411b37, type: 3}
+  id: 5
+  requiresMagazine: 1
+  cone: 4
+  shell: {fileID: 2592988093817448082, guid: 6adf469c371c06447886c60d9ef2e4c4, type: 3}
+  allowedMagazines:
+  - {fileID: 11400000, guid: dcf009658fe7d7e4b8a29af09eb728cf, type: 2}
+  ammoCapacity: 15

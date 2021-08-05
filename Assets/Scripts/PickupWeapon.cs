@@ -46,6 +46,10 @@ public class PickupWeapon : MonoBehaviour
         {
             PickUpWeapon();
         }
+        if(Input.GetKeyDown(KeyCode.Mouse2))
+        {
+            PickUpWeapon(true);
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (closestMagazine != null)
@@ -55,28 +59,46 @@ public class PickupWeapon : MonoBehaviour
             }
         }
     }
-    private void PickUpWeapon()
+    private void PickUpWeapon(bool isAkimbo = false)
     {
-        if (!inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.isNone())
+        if (!isAkimbo)
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Walk"))
+            if (!inventory.PrimaryWeapon.isNone())
             {
-                Rigidbody2D item = Instantiate(PrefabsStatic.Weapon, transform.position, Quaternion.Euler(transform.Find("Visual").eulerAngles)).GetComponent<Rigidbody2D>();
-                item.angularVelocity = 180;
-                item.GetComponent<WeaponLand>().weapon = inventory.PrimaryWeapon.Copy();
-                inventory.PrimaryWeapon.Destroy();
-                item.velocity = item.transform.right * 20;
-                animator.Play("No Gun", 0);
+                if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Walk") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Akimbo"))
+                {
+                    Rigidbody2D item = Instantiate(PrefabsStatic.Weapon, transform.position, Quaternion.Euler(transform.Find("Visual").eulerAngles)).GetComponent<Rigidbody2D>();
+                    item.angularVelocity = 180;
+                    item.GetComponent<WeaponLand>().weapon = inventory.PrimaryWeapon.Copy();
+                    inventory.PrimaryWeapon.Destroy();
+                    item.velocity = item.transform.right * 20;
+                    animator.Play("No Gun", 0);
+                }
+            }
+            if (closestWeapon != null)
+            {
+
+                if (inventory.PrimaryWeapon.isNone() && animator.GetCurrentAnimatorStateInfo(0).IsTag("Walk"))
+                {
+                    inventory.PrimaryWeapon = closestWeapon.weapon;
+                    animator.Play("Neutral", 0);
+                    Destroy(closestWeapon.gameObject);
+                }
             }
         }
-        if (closestWeapon != null)
+        else
         {
-
-            if (inventory.PrimaryWeapon.isNone() && animator.GetCurrentAnimatorStateInfo(0).IsTag("Walk"))
+            if (inventory.SecondaryWeapon.isNone())
             {
-                inventory.PrimaryWeapon = closestWeapon.weapon;
-                animator.Play("Neutral", 0);
-                Destroy(closestWeapon.gameObject);
+                if (closestWeapon != null)
+                {
+                    if (!inventory.PrimaryWeapon.isNone() && animator.GetCurrentAnimatorStateInfo(0).IsTag("Walk"))
+                    {
+                        inventory.SecondaryWeapon = closestWeapon.weapon;
+                        animator.Play("Akimbo", 0);
+                        Destroy(closestWeapon.gameObject);
+                    }
+                }
             }
         }
     }
