@@ -21,4 +21,5 @@ MonoBehaviour:
   shell: {fileID: 2592988093817448082, guid: 6adf469c371c06447886c60d9ef2e4c4, type: 3}
   allowedMagazines:
   - {fileID: 11400000, guid: dcf009658fe7d7e4b8a29af09eb728cf, type: 2}
+  - {fileID: 11400000, guid: ba06cc77d2d2e6b438e1252a4068a784, type: 2}
   ammoCapacity: 15

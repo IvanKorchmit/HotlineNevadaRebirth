@@ -8,6 +8,8 @@ public class PlayerAttack : MonoBehaviour
     private Animator rightHand;
     private Animator leftHand;
     [SerializeField] private MagazineItem oldMagazine;
+    private bool reloadAkimbo;
+    private bool isSecondReloading;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -18,7 +20,7 @@ public class PlayerAttack : MonoBehaviour
     }
     private void Update()
     {
-        if (!inventory.SecondaryWeapon.isNone() && !inventory.PrimaryWeapon.isNone())
+        if ((!inventory.SecondaryWeapon.isNone() && !inventory.PrimaryWeapon.isNone()) && !animator.GetCurrentAnimatorStateInfo(0).IsTag("Reload"))
         {
             rightHand.SetInteger("Weapon", inventory.SecondaryWeapon.WeaponBase.ID);
             leftHand.SetInteger("Weapon", inventory.PrimaryWeapon.WeaponBase.ID);
@@ -30,20 +32,26 @@ public class PlayerAttack : MonoBehaviour
             rightHand.gameObject.SetActive(false);
             leftHand.gameObject.SetActive(false);
         }
-        if (!inventory.SecondaryWeapon.isNone() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Akimbo"))
+        if (!inventory.SecondaryWeapon.isNone() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Akimbo") && !animator.GetCurrentAnimatorStateInfo(0).IsTag("Reload"))
         {
-            animator.Play("Akimbo");
+            if (!animator.GetBool("Reloading") && !animator.GetCurrentAnimatorStateInfo(0).IsTag("Reload"))
+            {
+                animator.Play("Akimbo");
+            }
         }
-        else if (inventory.SecondaryWeapon.isNone() && animator.GetCurrentAnimatorStateInfo(0).IsName("Akimbo"))
+        else if (inventory.SecondaryWeapon.isNone() && animator.GetCurrentAnimatorStateInfo(0).IsName("Akimbo") && !animator.GetCurrentAnimatorStateInfo(0).IsTag("Reload"))
         {
-            animator.Play("Neutral");
+            if (!animator.GetBool("Reloading") && !animator.GetCurrentAnimatorStateInfo(0).IsTag("Reload"))
+            {
+                animator.Play("Neutral");
+            }
         }
 
-        if (!inventory.PrimaryWeapon.isNone())
+        if (!inventory.PrimaryWeapon.isNone() && !reloadAkimbo)
         {
             animator.SetInteger("Weapon", inventory.PrimaryWeapon.WeaponBase.ID);
         }
-        else
+        else if (inventory.PrimaryWeapon.isNone())
         {
             animator.SetInteger("Weapon", 0);
         }
@@ -137,41 +145,58 @@ public class PlayerAttack : MonoBehaviour
                 flame.SetParent(null);
             }
         }
-        if (Input.GetKeyDown(KeyCode.R) && !inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            MagazineItem magazine = inventory.FindMagazine(inventory.PrimaryWeapon.MagazineBase);
-
-            if (!inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm fa)
+            if (inventory.SecondaryWeapon.isNone())
             {
-                if (magazine != null && magazine.magazine != null)
+                if (!inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm)
                 {
-                    magazine = magazine.Copy();
-                    oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
-                    inventory.PrimaryWeapon.Magazine = magazine.magazine;
-                    animator.SetBool("Reloading", true);
-                    if (inventory.hasThisMagazine(magazine.magazine))
+                    MagazineItem magazine = inventory.FindMagazine(inventory.PrimaryWeapon.MagazineBase);
+
+                    if (!inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm fa)
                     {
-                        if (fa.RequiresMagazine)
+                        if (magazine != null && magazine.magazine != null)
                         {
-                            inventory.PrimaryWeapon.Ammo = magazine.ammo;
+                            magazine = magazine.Copy();
+                            oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
+                            inventory.PrimaryWeapon.Magazine = magazine.magazine;
+                            animator.SetBool("Reloading", true);
+                            if (inventory.hasThisMagazine(magazine.magazine))
+                            {
+                                if (fa.RequiresMagazine)
+                                {
+                                    inventory.PrimaryWeapon.Ammo = magazine.ammo;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
+                            magazine = inventory.FindAllowedMagazines(fa);
+                            if (magazine != null)
+                            {
+                                magazine = magazine.Copy();
+                                inventory.PrimaryWeapon.Magazine = magazine.magazine;
+                                animator.SetBool("Reloading", true);
+                                if (fa.RequiresMagazine)
+                                {
+                                    inventory.PrimaryWeapon.Ammo = magazine.ammo;
+                                }
+                            }
                         }
                     }
                 }
-                else
-                {
-                    oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
-                    magazine = inventory.FindAllowedMagazines(fa);
-                    if (magazine != null)
-                    {
-                        magazine = magazine.Copy();
-                        inventory.PrimaryWeapon.Magazine = magazine.magazine;
-                        animator.SetBool("Reloading", true);
-                        if (fa.RequiresMagazine)
-                        {
-                            inventory.PrimaryWeapon.Ammo = magazine.ammo;
-                        }
-                    }
-                }
+            }
+            else
+            {
+                reloadAkimbo = true;
+                isSecondReloading = false;
+                transform.Find("Visual").GetComponent<SpriteRenderer>().flipY = isSecondReloading;
+                oldMagazine = inventory.PrimaryWeapon.MagazineBase.Copy();
+                animator.SetBool("Reloading", true);
+                animator.Play("Neutral");
+
+
             }
         }
     }
@@ -179,15 +204,15 @@ public class PlayerAttack : MonoBehaviour
     {
         inventory.PrimaryWeapon.Shoot(gameObject);
     }
-    
+
     public void Eject()
     {
         if (!inventory.PrimaryWeapon.isNone() && inventory.PrimaryWeapon.WeaponBase is Firearm f)
         {
             Rigidbody2D shell = Instantiate(f.ShellType, shellPoint.position, shellPoint.rotation * Quaternion.Euler(0, 0, Random.Range(-30, 30))).GetComponent<Rigidbody2D>();
             shell.velocity = -shell.transform.up * (14 + Random.Range(-4, 12));
-            shell.angularVelocity = Random.Range(0, 360);   
-        }   
+            shell.angularVelocity = Random.Range(0, 360);
+        }
     }
     public void ResetAnimation()
     {
@@ -204,14 +229,33 @@ public class PlayerAttack : MonoBehaviour
     }
     public void EjectMagazine()
     {
-        inventory.TakeItem(inventory.PrimaryWeapon.Magazine, 1);
+        inventory.TakeItem(!isSecondReloading ? inventory.PrimaryWeapon.Magazine : inventory.SecondaryWeapon.Magazine, 1);
         // Throwing magazine
         GameObject magazine = Instantiate(PrefabsStatic.Magazine, shellPoint.position, shellPoint.rotation * Quaternion.Euler(0, 0, Random.Range(-30, 30)));
         Rigidbody2D rb = magazine.GetComponent<Rigidbody2D>();
-        rb.velocity = magazine.transform.up * (14 + Random.Range(-4, 12));
+        rb.velocity = !isSecondReloading ? magazine.transform.up * (14 + Random.Range(-4, 12)) : -magazine.transform.up * (14 + Random.Range(-4, 12));
         magazine.GetComponent<SpriteRenderer>().sprite = oldMagazine.ammo == 0 ? oldMagazine.magazine.Empty : oldMagazine.magazine.Sprite;
         rb.angularVelocity = Random.Range(0, 360);
         magazine.GetComponent<MagazineLand>().magazine = oldMagazine;
-        animator.SetBool("Reloading", false);
+        animator.SetBool("Reloading", reloadAkimbo);
+    }
+    public void CheckReloading()
+    {
+        if (reloadAkimbo)
+        {
+            isSecondReloading = !isSecondReloading;
+            transform.Find("Visual").GetComponent<SpriteRenderer>().flipY = isSecondReloading;
+            if (!isSecondReloading)
+            {
+                animator.SetBool("Reloading", false);
+                reloadAkimbo = false;
+            }
+            else
+            {
+                Debug.Log(inventory.SecondaryWeapon.WeaponBase.ID);
+                animator.SetInteger("Weapon", inventory.SecondaryWeapon.WeaponBase.ID);
+                animator.Play("Neutral");
+            }
+        }
     }
 }

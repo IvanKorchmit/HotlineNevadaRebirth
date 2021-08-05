@@ -100,6 +100,18 @@ public class PickupWeapon : MonoBehaviour
                     }
                 }
             }
+            else if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Akimbo"))
+                {
+                    Rigidbody2D item = Instantiate(PrefabsStatic.Weapon, transform.position, Quaternion.Euler(transform.Find("Visual").eulerAngles)).GetComponent<Rigidbody2D>();
+                    item.angularVelocity = 180;
+                    item.GetComponent<WeaponLand>().weapon = inventory.SecondaryWeapon.Copy();
+                    inventory.SecondaryWeapon.Destroy();
+                    item.velocity = item.transform.right * 20;
+                    animator.Play("Neutral", 0);
+                }
+            }
         }
     }
 }
