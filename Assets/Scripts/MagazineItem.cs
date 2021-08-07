@@ -14,14 +14,26 @@ public class MagazineItem
         this.ammo = ammo;
         this.quantity = quantity;
     }
-    public void Take(int quantity)
+    public void Take(int quantity, bool isAmmo = false)
     {
-        this.quantity -= quantity;
-        if (this.quantity <= 0)
+        if (!isAmmo)
         {
-            magazine = null;
-            this.quantity = 0;
-            ammo = 0;
+            this.quantity -= quantity;
+            if (this.quantity <= 0)
+            {
+                magazine = null;
+                this.quantity = 0;
+                ammo = 0;
+            }
+        }
+        else
+        {
+            ammo -= quantity;
+            if (ammo <= 0)
+            {
+                ammo = magazine.AmmoCapacity;
+                Take(1, false);
+            }
         }
     }
     public bool Equals(MagazineItem magazine)

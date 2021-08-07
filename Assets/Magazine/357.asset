@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d8088c8256b44e47b7bbd30bd4aef3a, type: 3}
+  m_Name: 357
+  m_EditorClassIdentifier: 
+  stack: 3
+  name: .357
+  damage: 15
+  sprite: {fileID: -990949946027104418, guid: 2017e2070f10dbe48826988e9a864cad, type: 3}
+  empty: {fileID: 7544921640091146777, guid: 7c9a3a73502e92949b34890873d94fd6, type: 3}
+  ammoCapacity: 6
+  pellets: 1

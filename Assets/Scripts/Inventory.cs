@@ -32,18 +32,28 @@ public class Inventory : MonoBehaviour
         }
         return null;
     }
-    public MagazineItem TakeItem(Magazine magazine, int quantity)
+    public MagazineItem TakeItem(Magazine magazine, int quantity, bool isAmmo = false)
+    {
+        foreach (var item in inventory)
+        {
+            if (item != null && item.magazine == magazine)
+            {
+                item.Take(quantity, isAmmo);
+                MagazineItem newItem = new MagazineItem(item.ammo, quantity, item.magazine);
+                return newItem;
+            }
+        }
+        return null;
+    }
+    public void TakeAmmo(Magazine magazine, int quantity = 1)
     {
         foreach (var item in inventory)
         {
             if (item != null && item.magazine == magazine)
             {
                 item.Take(quantity);
-                MagazineItem newItem = new MagazineItem(item.ammo, quantity, item.magazine);
-                return newItem;
             }
         }
-        return null;
     }
     public bool hasThisMagazine(Magazine magazine)
     {
